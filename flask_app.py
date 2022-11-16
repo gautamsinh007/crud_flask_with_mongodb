@@ -36,14 +36,23 @@ except Exception as e:
             
 #     except Exception as e:  
 #         print(e)
-        
+        # user_review_exist = ml.config.fixspaceiz_user_review.find_one({'user_id':userId})
+
 @app.route('/home', methods=['GET', 'POST'])
 def index():
     data = request.get_json()
     if request.method=='POST':
         content = data['content']
         degree = data['degree']
+        
+        user=sample_e.find_one({"content":content})
+        if user :
+            return "user allredy existing "
+        
+        
+        
         sample_e.insert_one({'content': content, 'degree': degree})
+        
         
         print(content,"????????")
         print(degree,">>>>>>>>>>")
@@ -62,6 +71,7 @@ def demo():
     print(res)
 
     return  jsonify({"msg":res})
+ 
  
 #  find_many
  
@@ -89,12 +99,12 @@ def delete(content):
     return "data delete"
 
 
+
 # update
 @app.route("/update/<string:content>", methods=['PUT', "GET"])
 def update(content):
-    data = request.get_json()
+    # data = request.get_json()
     # if request.method == "POST":
-        
         
         # result = sample_e.delete_one({"content":content})
     # result = sample_e.find_one({"content":content})
@@ -104,10 +114,13 @@ def update(content):
     print(content)
     # print(degree)
     
+    user=sample_e.find_one({"content":content})
+    if user :
+    # sample_e.update_one({"content":content},{"$set":{"content":abc, "degree":bca}})
+        sample_e.update_many({"content":content},{"$set":{"content":abc, "degree":bca}})
     
-    sample_e.update_one({"content":content},{"$set":{"content":abc, "degree":bca}})
-    
-    return "data updated"
+    return "user not added"
+    # return "data updated"
 
 
 
