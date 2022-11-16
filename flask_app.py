@@ -1,3 +1,5 @@
+# https://www.youtube.com/watch?v=kZlet-OepxE  for mongodb in flask
+
 from flask  import  Flask , request, redirect, url_for
 from flask_pymongo import pymongo
 import certifi
@@ -46,7 +48,7 @@ def index():
         print(content,"????????")
         print(degree,">>>>>>>>>>")
         print(sample_e,"---------------------------------------")
-        return   "data added"
+        return  "data added"
 
 
 @app.route("/data")
@@ -79,8 +81,8 @@ def demo1(content):
 @app.route("/delete/<string:content>", methods = ["DELETE"])
 def delete(content):
     # result = sample_e.delete_one({"content":content})
-    result = sample_e.delete_many({"content":content})
-    del result
+    sample_e.delete_many({"content":content})
+    # del result
     # del (result['_id'])
     
     
@@ -106,6 +108,8 @@ def update(content):
     sample_e.update_one({"content":content},{"$set":{"content":abc, "degree":bca}})
     
     return "data updated"
+
+
 
 
 
